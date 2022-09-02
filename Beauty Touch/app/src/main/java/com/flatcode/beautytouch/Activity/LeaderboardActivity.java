@@ -47,8 +47,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new LeaderboardAdapter(context, list);
         binding.recyclerView.setAdapter(adapter);
-
-        SessionInfo();
     }
 
     private void SessionInfo() {
@@ -149,5 +147,17 @@ public class LeaderboardActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onResume() {
+        SessionInfo();
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        SessionInfo();
+        super.onRestart();
     }
 }

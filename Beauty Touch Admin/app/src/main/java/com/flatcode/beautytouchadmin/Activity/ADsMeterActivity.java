@@ -7,17 +7,17 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouchadmin.Adapter.ADsUserAdapter;
 import com.flatcode.beautytouchadmin.Model.User;
 import com.flatcode.beautytouchadmin.R;
 import com.flatcode.beautytouchadmin.Unit.DATA;
 import com.flatcode.beautytouchadmin.Unit.THEME;
 import com.flatcode.beautytouchadmin.databinding.ActivityAdsMeterBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -61,8 +61,6 @@ public class ADsMeterActivity extends AppCompatActivity {
             type = DATA.STARTED;
             getData(type);
         });
-
-        getData(type);
     }
 
     private void getData(String orderBy) {
@@ -93,5 +91,17 @@ public class ADsMeterActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        getData(type);
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        getData(type);
+        super.onResume();
     }
 }

@@ -10,17 +10,17 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouchadmin.Adapter.ShoppingCentersAdapter;
 import com.flatcode.beautytouchadmin.Model.ShoppingCenter;
 import com.flatcode.beautytouchadmin.R;
 import com.flatcode.beautytouchadmin.Unit.DATA;
 import com.flatcode.beautytouchadmin.Unit.THEME;
 import com.flatcode.beautytouchadmin.databinding.ActivityShoppingCentersBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,8 +49,6 @@ public class ShoppingCentersActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new ShoppingCentersAdapter(context, list);
         binding.recyclerView.setAdapter(adapter);
-
-        getAllPosts();
     }
 
     private void getAllPosts() {
@@ -85,5 +83,17 @@ public class ShoppingCentersActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        getAllPosts();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        getAllPosts();
+        super.onResume();
     }
 }

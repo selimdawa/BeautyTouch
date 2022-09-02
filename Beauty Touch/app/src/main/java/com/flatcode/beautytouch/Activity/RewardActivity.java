@@ -8,6 +8,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.flatcode.beautytouch.Model.Tools;
+import com.flatcode.beautytouch.R;
+import com.flatcode.beautytouch.Unit.CLASS;
+import com.flatcode.beautytouch.Unit.DATA;
+import com.flatcode.beautytouch.Unit.THEME;
+import com.flatcode.beautytouch.Unit.VOID;
+import com.flatcode.beautytouch.databinding.ActivityRewardBinding;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
@@ -18,13 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.flatcode.beautytouch.Model.Tools;
-import com.flatcode.beautytouch.R;
-import com.flatcode.beautytouch.Unit.CLASS;
-import com.flatcode.beautytouch.Unit.DATA;
-import com.flatcode.beautytouch.Unit.THEME;
-import com.flatcode.beautytouch.Unit.VOID;
-import com.flatcode.beautytouch.databinding.ActivityRewardBinding;
 
 import java.text.MessageFormat;
 
@@ -54,8 +54,6 @@ public class RewardActivity extends AppCompatActivity implements RewardedVideoAd
         rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
         rewardedVideoAd.setRewardedVideoAdListener(this);
         loadAd();
-
-        SessionInfo();
     }
 
     private void getNrPoints(String year, String session) {
@@ -175,5 +173,17 @@ public class RewardActivity extends AppCompatActivity implements RewardedVideoAd
     @Override
     public void onRewardedVideoCompleted() {
         Reward();
+    }
+
+    @Override
+    protected void onResume() {
+        SessionInfo();
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        SessionInfo();
+        super.onRestart();
     }
 }

@@ -10,18 +10,18 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouchadmin.Adapter.LeaderboardAdapter;
 import com.flatcode.beautytouchadmin.Model.Tools;
 import com.flatcode.beautytouchadmin.Model.User;
 import com.flatcode.beautytouchadmin.Unit.DATA;
 import com.flatcode.beautytouchadmin.Unit.THEME;
 import com.flatcode.beautytouchadmin.databinding.ActivitySessionNowInfoBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -48,8 +48,6 @@ public class SessionNowInfoActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new LeaderboardAdapter(context, list, true);
         binding.recyclerView.setAdapter(adapter);
-
-        SessionInfo();
     }
 
     private void SessionInfo() {
@@ -101,5 +99,17 @@ public class SessionNowInfoActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        SessionInfo();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        SessionInfo();
+        super.onResume();
     }
 }

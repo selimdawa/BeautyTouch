@@ -48,7 +48,6 @@ public class ShoppingCentersFragment extends Fragment {
         adapter = new ShoppingCentersAdapter(getContext(), list);
         binding.recyclerView.setAdapter(adapter);
 
-        getAllPosts();
         return binding.getRoot();
     }
 
@@ -84,5 +83,11 @@ public class ShoppingCentersFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        getAllPosts();
+        super.onResume();
     }
 }

@@ -48,7 +48,6 @@ public class SkinProductsFragment extends Fragment {
         adapter = new ProductsStaggeredAdapter(getContext(), list);
         binding.recyclerView.setAdapter(adapter);
 
-        getAllPosts();
         return binding.getRoot();
     }
 
@@ -86,5 +85,11 @@ public class SkinProductsFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        getAllPosts();
+        super.onResume();
     }
 }

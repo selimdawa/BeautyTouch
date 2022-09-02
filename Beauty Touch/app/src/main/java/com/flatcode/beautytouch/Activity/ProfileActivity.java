@@ -15,6 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.flatcode.beautytouch.Model.User;
+import com.flatcode.beautytouch.Unit.DATA;
+import com.flatcode.beautytouch.Unit.THEME;
+import com.flatcode.beautytouch.Unit.VOID;
 import com.flatcode.beautytouch.databinding.ActivityProfileBinding;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -24,10 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.flatcode.beautytouch.Model.User;
-import com.flatcode.beautytouch.Unit.DATA;
-import com.flatcode.beautytouch.Unit.THEME;
-import com.flatcode.beautytouch.Unit.VOID;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
@@ -53,8 +53,6 @@ public class ProfileActivity extends AppCompatActivity {
         dialog = new ProgressDialog(context);
         dialog.setTitle("Please wait...");
         dialog.setCanceledOnTouchOutside(false);
-
-        loadUserInfo();
 
         binding.back.setOnClickListener(v -> onBackPressed());
         binding.editImageIcon.setOnClickListener(v -> VOID.CropImageSquare(activity));
@@ -188,5 +186,17 @@ public class ProfileActivity extends AppCompatActivity {
                 binding.imageTrue.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        loadUserInfo();
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        loadUserInfo();
+        super.onRestart();
     }
 }

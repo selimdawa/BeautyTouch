@@ -50,9 +50,6 @@ public class UsersActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new UsersAdapter(context, list);
         binding.recyclerView.setAdapter(adapter);
-
-        VOID.getNrFromServer(DATA.USERS, binding.toolbar.nameSpace);
-        Users();
     }
 
     private void Users() {
@@ -85,5 +82,19 @@ public class UsersActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        VOID.getNrFromServer(DATA.USERS, binding.toolbar.nameSpace);
+        Users();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        VOID.getNrFromServer(DATA.USERS, binding.toolbar.nameSpace);
+        Users();
+        super.onResume();
     }
 }

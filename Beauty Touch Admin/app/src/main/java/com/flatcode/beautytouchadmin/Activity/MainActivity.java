@@ -12,11 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouchadmin.Adapter.MainAdapter;
 import com.flatcode.beautytouchadmin.Model.Main;
 import com.flatcode.beautytouchadmin.Model.Post;
@@ -27,6 +22,11 @@ import com.flatcode.beautytouchadmin.Unit.DATA;
 import com.flatcode.beautytouchadmin.Unit.THEME;
 import com.flatcode.beautytouchadmin.Unit.VOID;
 import com.flatcode.beautytouchadmin.databinding.ActivityMainBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,14 +85,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         binding.toolbar.image.setOnClickListener(v ->
                 VOID.IntentExtra(context, CLASS.PROFILE, DATA.PROFILE_ID, DATA.FirebaseUserUid));
 
-        userInfo();
-
         binding.recyclerView.setHasFixedSize(true);
         list = new ArrayList<>();
         adapter = new MainAdapter(context, list);
         binding.recyclerView.setAdapter(adapter);
-
-        nrItems();
     }
 
     private void IdeaPosts(int users, int hotProduct, int posts, int shoppingCentres, int sliderShow) {
@@ -150,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                U = 0;
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     User item = data.getValue(User.class);
                     assert item != null;
@@ -164,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        H = 0;
                         H = (int) dataSnapshot.getChildrenCount();
                         nrPosts();
                     }
@@ -180,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        P = 0;
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             Post item = data.getValue(Post.class);
                             assert item != null;
@@ -201,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        SH = 0;
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             Post item = data.getValue(Post.class);
                             assert item != null;
@@ -222,6 +222,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        S = 0;
                         S = (int) dataSnapshot.getChildrenCount();
                         IdeaPosts(U, H, P, SH, S);
                     }
@@ -263,4 +264,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
     // Color Mode -------------------------------- End
+
+    @Override
+    protected void onResume() {
+        userInfo();
+        nrItems();
+        super.onResume();
+    }
 }

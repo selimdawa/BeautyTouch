@@ -8,18 +8,18 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouch.Adapter.PostDetailAdapter;
 import com.flatcode.beautytouch.Model.Post;
 import com.flatcode.beautytouch.R;
 import com.flatcode.beautytouch.Unit.DATA;
 import com.flatcode.beautytouch.Unit.THEME;
 import com.flatcode.beautytouch.databinding.ActivityPostDetailBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +51,6 @@ public class PostDetailsActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new PostDetailAdapter(context, list);
         binding.recyclerView.setAdapter(adapter);
-
-        readPost();
-        addView();
     }
 
     private void readPost() {
@@ -78,5 +75,19 @@ public class PostDetailsActivity extends AppCompatActivity {
     private void addView() {
         FirebaseDatabase.getInstance().getReference(DATA.POSTS).child(postId).child("views")
                 .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(true);
+    }
+
+    @Override
+    protected void onResume() {
+        readPost();
+        addView();
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        readPost();
+        addView();
+        super.onRestart();
     }
 }

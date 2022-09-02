@@ -1,5 +1,8 @@
 package com.flatcode.beautytouch.Activity;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -7,11 +10,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouch.Adapter.ProductsStaggeredAdapter;
 import com.flatcode.beautytouch.Model.Post;
 import com.flatcode.beautytouch.R;
@@ -19,13 +17,15 @@ import com.flatcode.beautytouch.Unit.DATA;
 import com.flatcode.beautytouch.Unit.THEME;
 import com.flatcode.beautytouch.Unit.VOID;
 import com.flatcode.beautytouch.databinding.ActivityFavoritesBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 
 public class FavoritesActivity extends AppCompatActivity {
 
@@ -36,7 +36,7 @@ public class FavoritesActivity extends AppCompatActivity {
     private List<String> mySaves;
     private ProductsStaggeredAdapter adapter;
 
-    String publisher = DATA.PUBLISHER_NAME , aname = DATA.APP_NAME;
+    String publisher = DATA.PUBLISHER_NAME, aname = DATA.APP_NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,6 @@ public class FavoritesActivity extends AppCompatActivity {
         postList = new ArrayList<>();
         adapter = new ProductsStaggeredAdapter(context, postList);
         binding.recyclerView.setAdapter(adapter);
-
-        mySaves();
     }
 
     private void mySaves() {
@@ -114,5 +112,17 @@ public class FavoritesActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        mySaves();
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        mySaves();
+        super.onRestart();
     }
 }

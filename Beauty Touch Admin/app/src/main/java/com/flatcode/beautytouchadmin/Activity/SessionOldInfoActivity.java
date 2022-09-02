@@ -48,8 +48,6 @@ public class SessionOldInfoActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new LeaderboardOldAdapter(context, list, true);
         binding.recyclerView.setAdapter(adapter);
-
-        SessionInfo();
     }
 
     private void SessionInfo() {
@@ -101,5 +99,17 @@ public class SessionOldInfoActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        SessionInfo();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        SessionInfo();
+        super.onResume();
     }
 }

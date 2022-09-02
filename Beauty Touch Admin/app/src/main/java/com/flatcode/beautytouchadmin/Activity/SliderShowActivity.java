@@ -13,6 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.flatcode.beautytouchadmin.R;
+import com.flatcode.beautytouchadmin.Unit.DATA;
+import com.flatcode.beautytouchadmin.Unit.THEME;
+import com.flatcode.beautytouchadmin.Unit.VOID;
+import com.flatcode.beautytouchadmin.databinding.ActivitySliderShowBinding;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,11 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.flatcode.beautytouchadmin.R;
-import com.flatcode.beautytouchadmin.Unit.DATA;
-import com.flatcode.beautytouchadmin.Unit.THEME;
-import com.flatcode.beautytouchadmin.Unit.VOID;
-import com.flatcode.beautytouchadmin.databinding.ActivitySliderShowBinding;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.text.MessageFormat;
@@ -138,9 +138,6 @@ public class SliderShowActivity extends AppCompatActivity {
             VOID.CropImageSlider(activity);
             IMAGE_NUMBER = 20;
         });
-
-        getNrSliderShow();
-        SliderShow();
     }
 
     private void getNrSliderShow() {
@@ -396,5 +393,19 @@ public class SliderShowActivity extends AppCompatActivity {
                 Toast.makeText(this, "Something went wrong! " + error, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        getNrSliderShow();
+        SliderShow();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        getNrSliderShow();
+        SliderShow();
+        super.onResume();
     }
 }

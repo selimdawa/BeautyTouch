@@ -8,12 +8,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouchadmin.Adapter.ADsInfoAdapter;
 import com.flatcode.beautytouchadmin.Model.ADs;
 import com.flatcode.beautytouchadmin.R;
@@ -21,6 +15,12 @@ import com.flatcode.beautytouchadmin.Unit.DATA;
 import com.flatcode.beautytouchadmin.Unit.THEME;
 import com.flatcode.beautytouchadmin.Unit.VOID;
 import com.flatcode.beautytouchadmin.databinding.ActivityAdsInfoBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -52,9 +52,6 @@ public class ADsInfoActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new ADsInfoAdapter(context, list, true);
         binding.recyclerView.setAdapter(adapter);
-
-        loadUserInfo();
-        loadAds(DATA.NAME);
     }
 
     private void loadUserInfo() {
@@ -104,5 +101,19 @@ public class ADsInfoActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        loadUserInfo();
+        loadAds(DATA.NAME);
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        loadUserInfo();
+        loadAds(DATA.NAME);
+        super.onResume();
     }
 }

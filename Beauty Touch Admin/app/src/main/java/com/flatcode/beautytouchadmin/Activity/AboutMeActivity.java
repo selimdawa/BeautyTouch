@@ -21,6 +21,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.flatcode.beautytouchadmin.Model.Tools;
+import com.flatcode.beautytouchadmin.R;
+import com.flatcode.beautytouchadmin.Unit.DATA;
+import com.flatcode.beautytouchadmin.Unit.THEME;
+import com.flatcode.beautytouchadmin.Unit.VOID;
+import com.flatcode.beautytouchadmin.databinding.ActivityAboutMeBinding;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,12 +35,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.flatcode.beautytouchadmin.Model.Tools;
-import com.flatcode.beautytouchadmin.R;
-import com.flatcode.beautytouchadmin.Unit.DATA;
-import com.flatcode.beautytouchadmin.Unit.THEME;
-import com.flatcode.beautytouchadmin.Unit.VOID;
-import com.flatcode.beautytouchadmin.databinding.ActivityAboutMeBinding;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
@@ -60,8 +60,6 @@ public class AboutMeActivity extends AppCompatActivity {
         dialog = new ProgressDialog(context);
         dialog.setTitle("Please wait...");
         dialog.setCanceledOnTouchOutside(false);
-
-        AboutMe(binding.image, null, binding.name);
 
         binding.toolbar.nameSpace.setText("About Me");
         binding.toolbar.back.setOnClickListener(v -> onBackPressed());
@@ -195,5 +193,17 @@ public class AboutMeActivity extends AppCompatActivity {
                 Toast.makeText(this, "Something went wrong! " + error, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        AboutMe(binding.image, null, binding.name);
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        AboutMe(binding.image, null, binding.name);
+        super.onResume();
     }
 }

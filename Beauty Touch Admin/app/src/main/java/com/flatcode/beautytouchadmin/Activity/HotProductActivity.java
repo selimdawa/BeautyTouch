@@ -7,11 +7,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouchadmin.Adapter.HotProductAddAdapter;
 import com.flatcode.beautytouchadmin.Adapter.HotProductRemoveAdapter;
 import com.flatcode.beautytouchadmin.Model.Post;
@@ -19,6 +14,11 @@ import com.flatcode.beautytouchadmin.R;
 import com.flatcode.beautytouchadmin.Unit.DATA;
 import com.flatcode.beautytouchadmin.Unit.THEME;
 import com.flatcode.beautytouchadmin.databinding.ActivityHotProductBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,9 +56,6 @@ public class HotProductActivity extends AppCompatActivity {
         allpostLists = new ArrayList<>();
         allpostAdapter = new HotProductAddAdapter(context, allpostLists);
         binding.recyclerView2.setAdapter(allpostAdapter);
-
-        checkHotProduct();
-        getMoreProduct();
     }
 
     private void checkHotProduct() {
@@ -141,5 +138,19 @@ public class HotProductActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        checkHotProduct();
+        getMoreProduct();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        checkHotProduct();
+        getMoreProduct();
+        super.onResume();
     }
 }

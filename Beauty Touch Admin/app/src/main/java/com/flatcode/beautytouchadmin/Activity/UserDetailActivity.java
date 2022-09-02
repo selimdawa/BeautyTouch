@@ -8,11 +8,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouchadmin.Adapter.FavoritesAdapter;
 import com.flatcode.beautytouchadmin.Model.Post;
 import com.flatcode.beautytouchadmin.Model.User;
@@ -20,6 +15,11 @@ import com.flatcode.beautytouchadmin.Unit.DATA;
 import com.flatcode.beautytouchadmin.Unit.THEME;
 import com.flatcode.beautytouchadmin.Unit.VOID;
 import com.flatcode.beautytouchadmin.databinding.ActivityUserDetailBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,9 +51,6 @@ public class UserDetailActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new FavoritesAdapter(context, list);
         binding.recyclerView.setAdapter(adapter);
-
-        Saves();
-        userInfo();
     }
 
     private void Saves() {
@@ -125,5 +122,19 @@ public class UserDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        Saves();
+        userInfo();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        Saves();
+        userInfo();
+        super.onResume();
     }
 }

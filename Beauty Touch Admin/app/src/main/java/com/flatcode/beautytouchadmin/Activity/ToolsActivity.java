@@ -14,6 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.flatcode.beautytouchadmin.Model.Tools;
+import com.flatcode.beautytouchadmin.Unit.DATA;
+import com.flatcode.beautytouchadmin.Unit.THEME;
+import com.flatcode.beautytouchadmin.Unit.VOID;
+import com.flatcode.beautytouchadmin.databinding.ActivityToolsBinding;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,11 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.flatcode.beautytouchadmin.Model.Tools;
-import com.flatcode.beautytouchadmin.Unit.DATA;
-import com.flatcode.beautytouchadmin.Unit.THEME;
-import com.flatcode.beautytouchadmin.Unit.VOID;
-import com.flatcode.beautytouchadmin.databinding.ActivityToolsBinding;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
@@ -59,8 +59,6 @@ public class ToolsActivity extends AppCompatActivity {
         dialog = new ProgressDialog(context);
         dialog.setTitle("Please wait...");
         dialog.setCanceledOnTouchOutside(false);
-
-        Data();
 
         binding.editImageSessionNow.setOnClickListener(v -> {
             VOID.CropImageSession(activity);
@@ -317,5 +315,17 @@ public class ToolsActivity extends AppCompatActivity {
                 Toast.makeText(this, "Something went wrong! " + error, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        Data();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        Data();
+        super.onResume();
     }
 }

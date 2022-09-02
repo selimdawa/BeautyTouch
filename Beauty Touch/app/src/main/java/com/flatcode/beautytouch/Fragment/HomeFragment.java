@@ -69,8 +69,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        checkHotProduct();
-        getShowMoreProduct();
         return binding.getRoot();
     }
 
@@ -145,5 +143,12 @@ public class HomeFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        checkHotProduct();
+        getShowMoreProduct();
+        super.onResume();
     }
 }
