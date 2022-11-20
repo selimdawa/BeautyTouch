@@ -113,7 +113,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
                 assert user != null;
 
-                VOID.Glide(false, context, user.getImageurl(), binding.image);
+                VOID.Glide(true, context, user.getImageurl(), binding.image);
                 binding.name.setText(user.getUsername());
             }
 

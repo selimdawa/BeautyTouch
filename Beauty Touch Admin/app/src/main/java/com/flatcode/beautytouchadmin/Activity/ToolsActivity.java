@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.flatcode.beautytouchadmin.Model.Tools;
+import com.flatcode.beautytouchadmin.R;
 import com.flatcode.beautytouchadmin.Unit.DATA;
 import com.flatcode.beautytouchadmin.Unit.THEME;
 import com.flatcode.beautytouchadmin.Unit.VOID;
@@ -76,7 +77,7 @@ public class ToolsActivity extends AppCompatActivity {
             VOID.CropImageSession(activity);
             IMAGE_NUMBER = LOGO_OLD;
         });
-        binding.toolbar.nameSpace.setText("Tools");
+        binding.toolbar.nameSpace.setText(R.string.tools);
         binding.toolbar.back.setOnClickListener(v -> onBackPressed());
         binding.go.setOnClickListener(v -> validateData());
     }

@@ -63,7 +63,7 @@
                                     android:layout_height="wrap_content"
                                     android:paddingHorizontal="20sp"
                                     android:paddingVertical="10sp"
-                                    android:text="الجميع"
+                                    android:text="@string/all"
                                     android:textColor="@color/white"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
@@ -91,7 +91,7 @@
                                     android:layout_height="wrap_content"
                                     android:paddingHorizontal="20sp"
                                     android:paddingVertical="10sp"
-                                    android:text="بشرة"
+                                    android:text="@string/skin"
                                     android:textColor="@color/white"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
@@ -119,7 +119,7 @@
                                     android:layout_height="wrap_content"
                                     android:paddingHorizontal="20sp"
                                     android:paddingVertical="10sp"
-                                    android:text="شعر"
+                                    android:text="@string/hair"
                                     android:textColor="@color/white"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />

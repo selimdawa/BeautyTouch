@@ -43,7 +43,6 @@ public class UsersActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        binding.toolbar.nameSpace.setText(R.string.users);
         binding.toolbar.back.setOnClickListener(v -> onBackPressed());
 
         //binding.recyclerView.setHasFixedSize(true);
@@ -85,14 +84,8 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart() {
-        VOID.getNrFromServer(DATA.USERS, binding.toolbar.nameSpace);
-        Users();
-        super.onRestart();
-    }
-
-    @Override
     protected void onResume() {
+        binding.toolbar.nameSpace.setText(R.string.users);
         VOID.getNrFromServer(DATA.USERS, binding.toolbar.nameSpace);
         Users();
         super.onResume();

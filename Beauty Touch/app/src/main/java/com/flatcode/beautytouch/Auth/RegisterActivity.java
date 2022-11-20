@@ -37,7 +37,6 @@ public class RegisterActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        //VOID.Logo(getBaseContext(), binding.logo);
         VOID.Intro(getBaseContext(), binding.background, binding.backWhite, binding.backBlack);
 
         auth = FirebaseAuth.getInstance();

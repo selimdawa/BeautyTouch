@@ -40,7 +40,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:padding="5sp"
-                        android:text="صورة المرحلة الحالية"
+                        android:text="@string/current_session_image"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="21sp"
@@ -55,7 +55,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:padding="5sp"
-                        android:text="صورة المرحلة السابقة"
+                        android:text="@string/previous_session_image"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="21sp"
@@ -174,7 +174,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:padding="5sp"
-                        android:text="لوغو المرحلة الحالية"
+                        android:text="@string/current_session_logo"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="21sp"
@@ -189,7 +189,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:padding="5sp"
-                        android:text="صورة المرحلة السابقة"
+                        android:text="@string/previous_session_logo"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="21sp"
@@ -290,7 +290,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:padding="5sp"
-                        android:text="رقم المرحلة الحالية"
+                        android:text="@string/current_session_number"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="21sp"
@@ -305,7 +305,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:padding="5sp"
-                        android:text="رقم المرحلة السابقة"
+                        android:text="@string/previous_session_number"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="21sp"
@@ -319,7 +319,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/sessionNow"
+                        android:id="@+id/sessionNumberNow"
                         android:layout_width="0sp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -337,7 +337,7 @@
                         android:textStyle="normal" />
 
                     <EditText
-                        android:id="@+id/sessionOld"
+                        android:id="@+id/sessionNumberOld"
                         android:layout_width="0sp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -372,7 +372,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:padding="5sp"
-                        android:text="اسم المرحلة الحالية"
+                        android:text="@string/current_session_name"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="21sp"
@@ -387,7 +387,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:padding="5sp"
-                        android:text="اسم المرحلة السابقة"
+                        android:text="@string/previous_session_name"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="21sp"
@@ -401,7 +401,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/sessionNumberNow"
+                        android:id="@+id/sessionNow"
                         android:layout_width="0sp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -410,7 +410,7 @@
                         android:background="@drawable/button"
                         android:gravity="center"
                         android:importantForAutofill="no"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:maxLength="9"
                         android:padding="10sp"
                         android:textColor="?colorError"
@@ -419,7 +419,7 @@
                         android:textStyle="normal" />
 
                     <EditText
-                        android:id="@+id/sessionNumberOld"
+                        android:id="@+id/sessionOld"
                         android:layout_width="0sp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -428,7 +428,7 @@
                         android:background="@drawable/button"
                         android:gravity="center"
                         android:importantForAutofill="no"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:maxLength="9"
                         android:padding="10sp"
                         android:textColor="?colorError"
@@ -454,7 +454,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:padding="5sp"
-                        android:text="السنة الحالية"
+                        android:text="@string/current_year"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="21sp"
@@ -469,7 +469,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:padding="5sp"
-                        android:text="السنة السابقة"
+                        android:text="@string/last_year"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="21sp"

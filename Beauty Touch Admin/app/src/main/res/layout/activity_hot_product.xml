@@ -33,7 +33,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/kufi"
-                        android:text="الأكثر رواجا"
+                        android:text="@string/most_popular"
                         android:textColor="@color/basic2"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:fontFamily="@font/kufi"
-                        android:text="المزيد"
+                        android:text="@string/more"
                         android:textColor="@color/basic2"
                         android:textSize="18sp"
                         android:textStyle="bold" />

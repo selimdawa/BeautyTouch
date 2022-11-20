@@ -66,7 +66,23 @@
     <string name="twenty">20</string>
 
     //Data
-    <string name="users">users</string>
+    <string name="users">Users</string>
+    <string name="tools">Tools</string>
+    <string name="previous_session_image">Previous Session image</string>
+    <string name="current_session_image">Current Session image</string>
+    <string name="previous_session_logo">Previous Session Logo</string>
+    <string name="current_session_logo">Current Session Logo</string>
+    <string name="previous_session_number">Previous Session Number</string>
+    <string name="current_session_number">Current Session Number</string>
+    <string name="previous_session_name">Previous Session Name</string>
+    <string name="current_session_name">Current Session Name</string>
+    <string name="last_year">Last year</string>
+    <string name="current_year">Current year</string>
+    <string name="most_popular">Most popular</string>
+    <string name="more">More</string>
+    <string name="all">All</string>
+    <string name="skin">Skin</string>
+    <string name="hair">Hair</string>
     <string name="slider_show">Slider Show</string>
     <string name="shopping_centers">Shopping Centers</string>
     <string name="hot_product">Hot Product</string>

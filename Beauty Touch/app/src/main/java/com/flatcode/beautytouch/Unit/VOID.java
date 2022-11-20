@@ -1,5 +1,7 @@
 package com.flatcode.beautytouch.Unit;
 
+import static com.flatcode.beautytouch.Activity.MainActivity.mInterstitialAd;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -15,18 +17,22 @@ import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
 import com.bumptech.glide.Glide;
+import com.flatcode.beautytouch.Model.ADs;
+import com.flatcode.beautytouch.R;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.flatcode.beautytouch.Model.ADs;
-import com.flatcode.beautytouch.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -142,30 +148,62 @@ public class VOID {
         });
     }
 
-    public static void InterstitialAd(Context context, InterstitialAd interstitialAd, String interstitialName) {
-        MobileAds.initialize(context, initializationStatus -> {
-        });
-
-        interstitialAd = new InterstitialAd(context);
-        interstitialAd.setAdUnitId(context.getResources().getString(R.string.admob_interstitial));
-        interstitialAd.loadAd(new AdRequest.Builder().build());
-        InterstitialAd finalInterstitialAd = interstitialAd;
-        interstitialAd.setAdListener(new AdListener() {
+    public static void InterstitialAd(Activity activity) {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(activity, activity.getResources().getString(R.string.admob_interstitial), adRequest, new InterstitialAdLoadCallback() {
             @Override
-            public void onAdLoaded() {
-                finalInterstitialAd.show();
+            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                super.onAdLoaded(interstitialAd);
+                mInterstitialAd = interstitialAd;
             }
 
-            public void onAdOpened() {
-                AdUserCount(DATA.FirebaseUserUid, DATA.AD_LOAD, 1);
-                AdCount(DATA.FirebaseUserUid, interstitialName, DATA.ADS_LOADED_COUNT);
-            }
-
-            public void onAdClicked() {
-                AdUserCount(DATA.FirebaseUserUid, DATA.AD_CLICK, 1);
-                AdCount(DATA.FirebaseUserUid, interstitialName, DATA.ADS_CLICKED_COUNT);
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                mInterstitialAd = null;
             }
         });
+    }
+
+    public static void InterstitialShow(Activity activity, String interstitialName) {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                    super.onAdFailedToShowFullScreenContent(adError);
+                    mInterstitialAd = null;
+                }
+
+                @Override
+                public void onAdShowedFullScreenContent() {
+                    super.onAdShowedFullScreenContent();
+                }
+
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    super.onAdDismissedFullScreenContent();
+                    mInterstitialAd = null;
+                    InterstitialAd(activity);
+                }
+
+                @Override
+                public void onAdImpression() {
+                    super.onAdImpression();
+                    AdUserCount(DATA.FirebaseUserUid, DATA.AD_LOAD, 1);
+                    AdCount(DATA.FirebaseUserUid, interstitialName, DATA.ADS_LOADED_COUNT);
+                }
+
+                @Override
+                public void onAdClicked() {
+                    super.onAdClicked();
+                    AdUserCount(DATA.FirebaseUserUid, DATA.AD_CLICK, 1);
+                    AdCount(DATA.FirebaseUserUid, interstitialName, DATA.ADS_CLICKED_COUNT);
+                }
+            });
+
+            mInterstitialAd.show(activity);
+        } else {
+        }
     }
 
     public static void AdCount(String userId, String bannerName, String key) {
@@ -271,17 +309,6 @@ public class VOID {
             }
         });
     }
-
-    /*public static void Logo(Context context, ImageView background) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        if (sharedPreferences.getString("color_option", "ONE").equals("ONE")) {
-            background.setImageResource(R.drawable.logo);
-        } else if (sharedPreferences.getString("color_option", "NIGHT_ONE").equals("NIGHT_ONE")) {
-            background.setImageResource(R.drawable.logo_night);
-        }
-    }*/
-
 
     public static void RateUs(Activity activity) {
         Uri uri = Uri.parse("market://details?id=" + activity.getPackageName());

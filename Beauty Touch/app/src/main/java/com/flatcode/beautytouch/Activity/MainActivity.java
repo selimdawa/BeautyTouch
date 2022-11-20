@@ -27,14 +27,6 @@ import androidx.preference.PreferenceManager;
 
 import com.bumptech.glide.Glide;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouch.BuildConfig;
 import com.flatcode.beautytouch.Fragment.HairProductsFragment;
 import com.flatcode.beautytouch.Fragment.HomeFragment;
@@ -49,6 +41,15 @@ import com.flatcode.beautytouch.Unit.DATA;
 import com.flatcode.beautytouch.Unit.THEME;
 import com.flatcode.beautytouch.Unit.VOID;
 import com.flatcode.beautytouch.databinding.ActivityMainBinding;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.MessageFormat;
 import java.util.Objects;
@@ -63,10 +64,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             hair_product = "Hair Products", shopping_center = "Shopping Centers", number_product = "";
 
     MeowBottomNavigation meowBottomNavigation;
-    String publisher = DATA.PUBLISHER_NAME , aname = DATA.APP_NAME;
+    String publisher = DATA.PUBLISHER_NAME, aname = DATA.APP_NAME;
     private static final int SETTINGS_CODE = 234;
 
-    private InterstitialAd mInterstitialAd = null;
+    public static InterstitialAd mInterstitialAd = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.toolbar.image.setOnClickListener(v -> VOID.Intent(context, CLASS.PROFILE));
         binding.toolbar.drawer.setOnClickListener(v -> binding.drawerLayout.openDrawer(GravityCompat.START));
 
-        VOID.InterstitialAd(context, mInterstitialAd, DATA.INTERSTITIAL_HOME);
+        MobileAds.initialize(this, initializationStatus -> {
+        });
+
+        VOID.InterstitialAd(activity);
 
         meowBottomNavigation = binding.bottomNavigation;
 
@@ -110,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case 2:
                     fragment = new HomeFragment();
+                    VOID.InterstitialShow(activity, DATA.INTERSTITIAL_HOME);
                     break;
                 case 3:
                     fragment = new HairProductsFragment();

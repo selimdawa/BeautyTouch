@@ -8,12 +8,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouch.Adapter.LeaderboardAdapter;
 import com.flatcode.beautytouch.Model.Post;
 import com.flatcode.beautytouch.Model.Reward;
@@ -24,6 +18,12 @@ import com.flatcode.beautytouch.Unit.DATA;
 import com.flatcode.beautytouch.Unit.THEME;
 import com.flatcode.beautytouch.Unit.VOID;
 import com.flatcode.beautytouch.databinding.ActivityLeaderboardBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -58,10 +58,11 @@ public class LeaderboardActivity extends AppCompatActivity {
                 assert tools != null;
                 String year = tools.getYear();
                 String session = tools.getSession();
+                String sessionNumber = tools.getSessionNumber();
                 VOID.Glide(false, context, tools.getImageSession(), binding.imageSession);
                 VOID.Glide(false, context, tools.getImageLogo(), binding.imageLogo);
-                binding.sessionNumber.setText(tools.getSessionNumber());
-                String key = year + "_" + session;
+                binding.sessionNumber.setText(session);
+                String key = year + "_" + sessionNumber;
                 getData(key);
                 Reward(key);
             }
@@ -97,25 +98,27 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     private void Reward(String key) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(DATA.M_REWARD).child(key);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(DATA.M_REWARD);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Reward reward = dataSnapshot.getValue(Reward.class);
                 assert reward != null;
-                if (dataSnapshot.exists()) {
-                    if (reward.getReward() != null)
-                        ReadReward(reward.getReward(), binding.reward);
-                    if (reward.getReward2() != null)
-                        ReadReward(reward.getReward2(), binding.reward2);
-                    if (reward.getReward3() != null)
-                        ReadReward(reward.getReward3(), binding.reward3);
-                    if (reward.getReward4() != null)
-                        ReadReward(reward.getReward4(), binding.reward4);
-                    if (reward.getReward5() != null)
-                        ReadReward(reward.getReward5(), binding.reward5);
-                    if (reward.getReward6() != null)
-                        ReadReward(reward.getReward6(), binding.reward6);
+                if (dataSnapshot.child(key).exists()) {
+                    if (dataSnapshot.exists()) {
+                        if (reward.getReward() != null)
+                            ReadReward(reward.getReward(), binding.reward);
+                        if (reward.getReward2() != null)
+                            ReadReward(reward.getReward2(), binding.reward2);
+                        if (reward.getReward3() != null)
+                            ReadReward(reward.getReward3(), binding.reward3);
+                        if (reward.getReward4() != null)
+                            ReadReward(reward.getReward4(), binding.reward4);
+                        if (reward.getReward5() != null)
+                            ReadReward(reward.getReward5(), binding.reward5);
+                        if (reward.getReward6() != null)
+                            ReadReward(reward.getReward6(), binding.reward6);
+                    }
                 }
             }
 

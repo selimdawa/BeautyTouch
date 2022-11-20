@@ -77,13 +77,13 @@ public class VOID {
                 if (isUser) {
                     Image.setImageResource(R.drawable.basic_user);
                 } else {
-                    Image.setImageResource(R.drawable.basic_user);
+                    Image.setImageResource(R.drawable.icon);
                 }
             } else {
                 Glide.with(context).load(Url).centerCrop().placeholder(R.color.image_profile).into(Image);
             }
         } catch (Exception e) {
-            Image.setImageResource(R.drawable.basic_user);
+            Image.setImageResource(R.drawable.icon);
         }
     }
 
@@ -124,16 +124,6 @@ public class VOID {
             backDark.setVisibility(View.VISIBLE);
         }
     }
-
-    /*public static void Logo(Context context, ImageView background) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        if (sharedPreferences.getString("color_option", "ONE").equals("ONE")) {
-            background.setImageResource(R.drawable.logo);
-        } else if (sharedPreferences.getString("color_option", "NIGHT_ONE").equals("NIGHT_ONE")) {
-            background.setImageResource(R.drawable.logo_night);
-        }
-    }*/
 
     public static void getNrFromServer(String server, TextView name) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference(server);

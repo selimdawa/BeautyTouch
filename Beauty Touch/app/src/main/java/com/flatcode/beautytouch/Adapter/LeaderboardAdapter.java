@@ -13,17 +13,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.flatcode.beautytouch.Filter.LeaderboardFilter;
 import com.flatcode.beautytouch.Model.Tools;
 import com.flatcode.beautytouch.Model.User;
 import com.flatcode.beautytouch.Unit.DATA;
 import com.flatcode.beautytouch.Unit.VOID;
 import com.flatcode.beautytouch.databinding.ItemLeaderboardBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -44,13 +44,13 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
     @NonNull
     @Override
-    public LeaderboardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = ItemLeaderboardBinding.inflate(LayoutInflater.from(mContext), parent, false);
         return new ViewHolder(binding.getRoot());
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final LeaderboardAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         final User user = list.get(position);
         String id = user.getId();
@@ -110,7 +110,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
                 Tools tools = dataSnapshot.getValue(Tools.class);
                 assert tools != null;
                 String year = tools.getYear();
-                String session = tools.getSession();
+                String session = tools.getSessionNumber();
                 Points(year, session, points, id);
             }
 

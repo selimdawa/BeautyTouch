@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        //VOID.Logo(getBaseContext(), binding.logo);
         VOID.Intro(getBaseContext(), binding.background, binding.backWhite, binding.backBlack);
 
         auth = FirebaseAuth.getInstance();
@@ -50,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     private void validateDate() {
 
         //get data
-        email = binding.emailEt.getText().toString().trim() + "@@flatcodetest.com";
+        email = binding.emailEt.getText().toString().trim() + "@flatcodetest.com";
         number = binding.emailEt.getText().toString().trim();
         password = binding.passwordEt.getText().toString().trim();
 

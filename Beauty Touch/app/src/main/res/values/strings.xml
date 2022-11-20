@@ -30,6 +30,7 @@
     <string name="version">1.0v</string>
     <string name="most_hot">Most Hot</string>
     <string name="show_more">Show More</string>
+    <string name="earn_points">Earn points</string>
 
     //Theme
     <string name="one_theme">Basic</string>

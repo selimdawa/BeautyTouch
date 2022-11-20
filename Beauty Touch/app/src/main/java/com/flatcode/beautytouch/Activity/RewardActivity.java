@@ -1,5 +1,7 @@
 package com.flatcode.beautytouch.Activity;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -15,11 +17,13 @@ import com.flatcode.beautytouch.Unit.DATA;
 import com.flatcode.beautytouch.Unit.THEME;
 import com.flatcode.beautytouch.Unit.VOID;
 import com.flatcode.beautytouch.databinding.ActivityRewardBinding;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,12 +32,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.MessageFormat;
 
-public class RewardActivity extends AppCompatActivity implements RewardedVideoAdListener {
+public class RewardActivity extends AppCompatActivity {
 
-    private Context context = RewardActivity.this;
+    private Activity activity;
+    private Context context = activity = RewardActivity.this;
     private ActivityRewardBinding binding;
 
-    RewardedVideoAd rewardedVideoAd;
+    RewardedAd mRewardedAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,7 @@ public class RewardActivity extends AppCompatActivity implements RewardedVideoAd
         View view = binding.getRoot();
         setContentView(view);
 
-        binding.toolbar.nameSpace.setText("Earn Points");
+        binding.toolbar.nameSpace.setText(R.string.earn_points);
 
         binding.leaderboardCard.setOnClickListener(v -> VOID.Intent(context, CLASS.LEADERBOARD));
         binding.leaderboardCardOld.setOnClickListener(v -> VOID.Intent(context, CLASS.LEADERBOARD_OLD));
@@ -51,9 +56,87 @@ public class RewardActivity extends AppCompatActivity implements RewardedVideoAd
         MobileAds.initialize(context, initializationStatus -> {
         });
 
-        rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        rewardedVideoAd.setRewardedVideoAdListener(this);
-        loadAd();
+        loadRewardedAd();
+    }
+
+    private void loadRewardedAd() {
+        RewardedAd.load(context, getResources().getString(R.string.admob_reward), new AdRequest.Builder().build(), new RewardedAdLoadCallback() {
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                mRewardedAd = null;
+            }
+
+            @Override
+            public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                super.onAdLoaded(rewardedAd);
+                mRewardedAd = rewardedAd;
+            }
+        });
+    }
+
+    private void showRewardedAd() {
+        if (mRewardedAd != null) {
+            mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdClicked() {
+                    super.onAdClicked();
+                }
+
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    super.onAdDismissedFullScreenContent();
+                    mRewardedAd = null;
+                    Reward();
+                    loadRewardedAd();
+                }
+
+                @Override
+                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                    super.onAdFailedToShowFullScreenContent(adError);
+                    mRewardedAd = null;
+                }
+
+                @Override
+                public void onAdImpression() {
+                    super.onAdImpression();
+                }
+
+                @Override
+                public void onAdShowedFullScreenContent() {
+                    super.onAdShowedFullScreenContent();
+                }
+            });
+
+            mRewardedAd.show(activity, rewardItem -> {
+            });
+        } else {
+        }
+    }
+
+    private void loadAndShowRewardedAd() {
+        ProgressDialog dialog = new ProgressDialog(context);
+        dialog.setTitle("Please wait");
+        dialog.setMessage("Loading Rewarded Ad");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        RewardedAd.load(context, getResources().getString(R.string.admob_reward), new AdRequest.Builder().build(), new RewardedAdLoadCallback() {
+            @Override
+            public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                super.onAdLoaded(rewardedAd);
+                mRewardedAd = rewardedAd;
+                dialog.dismiss();
+                showRewardedAd();
+            }
+
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                mRewardedAd = null;
+                dialog.dismiss();
+            }
+        });
     }
 
     private void getNrPoints(String year, String session) {
@@ -84,25 +167,22 @@ public class RewardActivity extends AppCompatActivity implements RewardedVideoAd
                 Tools tools = dataSnapshot.getValue(Tools.class);
                 assert tools != null;
                 String year = tools.getYear();
-                String session = tools.getSession();
+                String session = tools.getSessionNumber();
                 String oldYear = tools.getOldYear();
-                String oldSession = tools.getOldSession();
+                String oldSession = tools.getOldSessionNumber();
 
-                if (!tools.getSession().equals(tools.getOldSession())) {
+                if ((!session.equals(oldSession)) || (!year.equals(oldYear)))
                     binding.leaderboardCardOld.setVisibility(View.VISIBLE);
-                } else {
+                else
                     binding.leaderboardCardOld.setVisibility(View.GONE);
-                }
 
                 binding.sessionInfo.setText(MessageFormat.format("{0} | {1}", year, session));
                 binding.sessionInfoOld.setText(MessageFormat.format("{0} | {1}", oldYear, oldSession));
                 getNrPoints(year, session);
 
                 binding.rewardCard.setOnClickListener(v -> {
-                    if (rewardedVideoAd.isLoaded()) {
-                        rewardedVideoAd.show();
-                    }
-                    Toast.makeText(RewardActivity.this, "The ad is loaded, click again if it does not appear", Toast.LENGTH_SHORT).show();
+                    loadAndShowRewardedAd();
+                    Toast.makeText(context, "The ad is loaded, click again if it does not appear", Toast.LENGTH_SHORT).show();
                     getNrPoints(year, session);
                 });
             }
@@ -122,7 +202,7 @@ public class RewardActivity extends AppCompatActivity implements RewardedVideoAd
                 Tools tools = dataSnapshot.getValue(Tools.class);
                 assert tools != null;
                 String year = tools.getYear();
-                String session = tools.getSession();
+                String session = tools.getSessionNumber();
                 VOID.AdRewardCount(DATA.FirebaseUserUid, DATA.EMPTY + year + "_" + DATA.EMPTY + session);
             }
 
@@ -131,48 +211,6 @@ public class RewardActivity extends AppCompatActivity implements RewardedVideoAd
 
             }
         });
-    }
-
-    private void loadAd() {
-        rewardedVideoAd.loadAd(getResources().getString(R.string.admob_reward),
-                new AdRequest.Builder().build());
-    }
-
-    @Override
-    public void onRewardedVideoAdLoaded() {
-    }
-
-    @Override
-    public void onRewardedVideoAdOpened() {
-
-    }
-
-    @Override
-    public void onRewardedVideoStarted() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdClosed() {
-        loadAd();
-    }
-
-    @Override
-    public void onRewarded(RewardItem rewardItem) {
-    }
-
-    @Override
-    public void onRewardedVideoAdLeftApplication() {
-    }
-
-    @Override
-    public void onRewardedVideoAdFailedToLoad(int i) {
-        Toast.makeText(this, "Please wait for the ads to load", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onRewardedVideoCompleted() {
-        Reward();
     }
 
     @Override
