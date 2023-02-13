@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Activity activity;
     Context context = activity = MainActivity.this;
 
-    public String home = "Home Page", skin_product = "Skin Products",
-            hair_product = "Hair Products", shopping_center = "Shopping Centers", number_product = "";
+    public String home = "Home Page", skin_product = "Skin Products", hair_product = "Hair Products",
+            shopping_center = "Shopping Centers", number_product = DATA.EMPTY;
 
     MeowBottomNavigation meowBottomNavigation;
     String publisher = DATA.PUBLISHER_NAME, aname = DATA.APP_NAME;

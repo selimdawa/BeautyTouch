@@ -114,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
         //setup data to add in db
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put(DATA.ID, id);
-        hashMap.put("started", "" + System.currentTimeMillis());
+        hashMap.put("started", DATA.EMPTY + System.currentTimeMillis());
         hashMap.put("phonenumber", number);
         hashMap.put("password", password);
         hashMap.put("mversion", "1.0");
